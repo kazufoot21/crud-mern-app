@@ -3,6 +3,11 @@ const app = express();
 const cors = require('cors');
 const mongoose = require('mongoose');
 
+//config
+app.use(cors());
+app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
+
 //connect to mongodb
 mongoose.connect(
   'mongodb+srv://kazu:kazu0721@cluster0.ieiut.mongodb.net/crud-mern-app?retryWrites=true&w=majority'
@@ -29,7 +34,7 @@ app.get('/items', (req, res) => {
 
 //create route
 
-app.get('/newitem', (req, res) => {
+app.post('/newitem', (req, res) => {
   const newItem = new Item({
     title: req.body.title,
     description: req.body.description,

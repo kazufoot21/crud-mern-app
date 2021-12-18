@@ -1,5 +1,5 @@
 import './App.css';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import axios from 'axios';
 
 function App() {
@@ -7,6 +7,29 @@ function App() {
     title: '',
     description: '',
   });
+
+  const [items, setItems] = useState([
+    {
+      title: '',
+      description: '',
+      _id: '',
+    },
+  ]);
+
+  useEffect(() => {
+    fetch('/items')
+      .then((res) => {
+        if (res.ok) {
+          return res.json();
+        }
+      })
+      .then((jsonRes) => {
+        setItems(jsonRes);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, [items]);
 
   function handleChange(event) {
     const { name, value } = event.target;
@@ -16,7 +39,6 @@ function App() {
         [name]: value,
       };
     });
-    console.log(item);
   }
 
   function AddItem(event) {
@@ -28,23 +50,44 @@ function App() {
 
     axios.post('/newitem', newItem);
     console.log(newItem);
+    alert('item added');
+
+    setItem({
+      title: '',
+      description: '',
+    });
   }
 
   return (
     <div className="App">
-      <input
-        onChange={handleChange}
-        name="title"
-        value={item.title}
-        placeholder="title"
-      ></input>
-      <input
-        onChange={handleChange}
-        name="description"
-        value={item.description}
-        placeholder="description"
-      ></input>
-      <button onClick={AddItem}>Add Item</button>
+      <div className="main">
+        <input
+          onChange={handleChange}
+          name="title"
+          value={item.title}
+          placeholder="title"
+        ></input>
+        <input
+          onChange={handleChange}
+          name="description"
+          value={item.description}
+          placeholder="description"
+        ></input>
+        <button onClick={AddItem}>Add Item</button>
+      </div>
+      {items.map((item) => {
+        return (
+          <div
+            key={item._id}
+            style={{ background: 'black', width: '40%', margin: 'auto auto' }}
+          >
+            <p>{item.title}</p>
+            <p>{item.description}</p>
+            <button onClick={}>Delete</button>
+            <button>Update</button>
+          </div>
+        );
+      })}
     </div>
   );
 }
