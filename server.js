@@ -52,6 +52,17 @@ app.post('/newitem', (req, res) => {
 
 //delete route
 
+app.delete('/delete/:id', (req, res) => {
+  const id = req.params.id;
+  Item.findByIdAndDelete({ _id: id }, (req, res, err) => {
+    if (!err) {
+      console.log('item deleted');
+    } else {
+      console.log(err);
+    }
+  });
+});
+
 //update route
 
 app.listen(3000, () => {

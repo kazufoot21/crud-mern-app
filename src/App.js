@@ -58,6 +58,12 @@ function App() {
     });
   }
 
+  function deleteItem(id) {
+    axios.delete('/delete/' + id);
+    alert('item deleted');
+    console.log(`deleted item with id: ${id} `);
+  }
+
   return (
     <div className="App">
       <div className="main">
@@ -79,11 +85,17 @@ function App() {
         return (
           <div
             key={item._id}
-            style={{ background: 'black', width: '40%', margin: 'auto auto' }}
+            style={{ background: 'skyblue', width: '40%', margin: 'auto auto' }}
           >
             <p>{item.title}</p>
             <p>{item.description}</p>
-            <button onClick={}>Delete</button>
+            <button
+              onClick={() => {
+                deleteItem(item._id);
+              }}
+            >
+              Delete
+            </button>
             <button>Update</button>
           </div>
         );
