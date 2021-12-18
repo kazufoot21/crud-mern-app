@@ -65,6 +65,24 @@ app.delete('/delete/:id', (req, res) => {
 
 //update route
 
+app.put('/put/:id', (req, res) => {
+  const updatedItem = {
+    title: req.body.title,
+    description: req.body.description,
+  };
+  Item.findByIdAndUpdate(
+    { _id: req.params.id },
+    { $set: updatedItem },
+    (req, res, err) => {
+      if (!err) {
+        console.log('item updated');
+      } else {
+        console.log(err);
+      }
+    }
+  );
+});
+
 app.listen(3000, () => {
   console.log('Express is running');
 });
