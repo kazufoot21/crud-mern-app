@@ -13,10 +13,7 @@ mongoose.connect(
   'mongodb+srv://kazu:kazu0721@cluster0.ieiut.mongodb.net/crud-mern-app?retryWrites=true&w=majority'
 );
 //data schema
-const itemSchema = {
-  title: String,
-  description: String,
-};
+const itemSchema = { title: String, description: String };
 
 //data model
 const Item = mongoose.model('Item', itemSchema);
@@ -72,7 +69,7 @@ app.put('/put/:id', (req, res) => {
   };
   Item.findByIdAndUpdate(
     { _id: req.params.id },
-    { $set: updatedItem },
+    { $set: updatedItem }, // MongoDBのシェルと同じ表記で更新するフィールドの指定をすることができる。
     (req, res, err) => {
       if (!err) {
         console.log('item updated');

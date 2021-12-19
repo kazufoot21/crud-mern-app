@@ -17,6 +17,7 @@ function App() {
   ]);
 
   const [isPut, setIsPut] = useState(false);
+
   const [updatedItem, setUpdatedItem] = useState({
     title: '',
     description: '',
@@ -58,7 +59,6 @@ function App() {
     axios.post('/newitem', newItem);
     console.log(newItem);
     alert('item added');
-
     setItem({
       title: '',
       description: '',
@@ -84,7 +84,7 @@ function App() {
   function updateItem(id) {
     axios.put('/put/' + id, updatedItem);
     alert('item updated');
-    console.log(`deleted item with id: ${id} `);
+    console.log(`updated item with id: ${id} `);
   }
 
   function handleUpdate(event) {
@@ -130,18 +130,13 @@ function App() {
             value={updatedItem.description}
             placeholder="description"
           ></input>
-          <button onClick={() => updateItem(updatedItem.id)}>
-            Update Item
-          </button>
+          <button onClick={() => updateItem(updatedItem.id)}>Update Item</button>
         </div>
       )}
 
       {items.map((item) => {
         return (
-          <div
-            key={item._id}
-            style={{ background: 'skyblue', width: '40%', margin: 'auto auto' }}
-          >
+          <div key={item._id} style={{ background: 'skyblue', width: '40%', margin: 'auto auto' }}>
             <p>{item.title}</p>
             <p>{item.description}</p>
             <button
